@@ -1,0 +1,9 @@
+.DS_store
+.git
+.swp
+
+.csv
+/src
+/dist
+
+/pg
