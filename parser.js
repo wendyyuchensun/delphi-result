@@ -1,12 +1,13 @@
 {
-  const fs  = require('fs')
+  const fs        = require('fs')
         promisify = require('./utils/general-utils').promisify
         prf       = promisify(fs.readFile)
         pwf       = promisify(fs.writeFile)
-        parser    = require('./utils/parser-utils').parser
+        pUtils    = require('./utils/parser-utils')
 
-  prf('./src/201706141111.csv', 'utf8')
-    .then(raw => parser(raw))
-    .then((collection) => console.log(collection))
-    .catch(err => console.log(err))
+  module.exports = fileName => {
+    return prf(fileName, 'utf8')
+      .then(raw => pUtils(raw))
+      .catch(err => console.log('err in parser'))
+  }
 }

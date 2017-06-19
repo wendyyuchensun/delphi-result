@@ -2,9 +2,9 @@
   "name": "delphi-result-parser",
   "version": "1.0.0",
   "description": "Parse result of delphi questionnaire and generate report",
-  "main": "parser.js",
+  "main": "controller.js",
   "scripts": {
-    "start": "node parser"
+    "start": "node controller"
   },
   "author": "Wendy Yuchen Sun",
   "license": "ISC"

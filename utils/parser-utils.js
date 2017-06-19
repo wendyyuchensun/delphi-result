@@ -1,4 +1,4 @@
-{
+(() => {
   const r        = require('./general-utils').r
         addProps = require('./general-utils').addProps
         ap       = Array.prototype
@@ -22,24 +22,22 @@
   }
 
   ap.addProps({rPush, rShift, rPop, transpose, toObj})
-}
 
-(() => {
   function addSecNo () {
     let sec = 1, lastNo
     return (target, d) => {
       let q  = d.question
-          no = parseInt(d.question)
-      d.question = q.replace(/\d+\-\d+\s/, '')
+          no = parseInt(q)
+      d.question = q.replace(/^\d+\-\d+\s/, '')
       if (lastNo && no < lastNo) sec++
-      sec = target[sec] = target[sec] || {}
-      sec[no] = d
+      target[sec] = target[sec] || {}
+      target[sec][no] = d
       lastNo = no
       return target
     }
   }
 
-  function parser (raw) {
+  function pUtils (raw) {
     let aux = raw.split('\r\n').map(row => row.split(',').rShift().rPop()),
         qs = aux.shift().filter((row, i) => i % 2 === 0)
     aux = aux.transpose().map(row => row.toObj())
@@ -48,5 +46,5 @@
     }).reduce(addSecNo(), {})
   }
 
-  module.exports = {parser}
+  module.exports = pUtils
 })()

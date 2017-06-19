@@ -1,15 +1,23 @@
 (() => {
-  function promisify(fn) {
+  function promisify(fn, cb = dpcb) {
     return function () {
       return new Promise((res, rej) => {
-        fn(...arguments, (err, data) => {
-          if (err) {
-            rej(err)
-            return
-          }
-          res(data)
-        })
+        fn(...arguments, pcbg(cb, res, rej))
       })
+    }
+  }
+
+  function pcbg (cb, res, rej) {  // promise callback generator
+    return cb(res, rej)
+  }
+
+  function dpcb (res, rej) { // default promise callback
+    return (err, data) => {
+      if (err) {
+        rej(err)
+        return
+      }
+      res(data)
     }
   }
 
